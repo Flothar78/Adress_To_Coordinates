@@ -17,7 +17,7 @@ app.post("/api", async (req, res) => {
     const response = await axios.get(
       `https:api-adresse.data.gouv.fr/search/?q=${request.streetNumber}+${request.streetType}+${request.streetName}&postcode=${request.postalCode}`
     );
-    res.send("OK");
+    res.send(response.data.features[0].geometry.coordinates);
     console.log(response.data.features[0].geometry.coordinates);
   } catch (error) {
     console.error(error);

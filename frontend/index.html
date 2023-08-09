@@ -88,10 +88,10 @@
       body: JSON.stringify(requestObject),
     });
     console.log(response);
-    const getResult = await response;
+    const getResult = await response.json();
     console.log(getResult);
-    let coordinnatesDisplay = getResult.features[0].geometry.coordinates;
-    let managedData = `LATITUDE: ${coordinnatesDisplay[1]}\nLONGITUDE: ${coordinnatesDisplay[0]}`;
+
+    let managedData = `LATITUDE: ${getResult[1]}\nLONGITUDE: ${getResult[0]}`;
     document.getElementById("coordinates").textContent = managedData;
   };
 </script>

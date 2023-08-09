@@ -23,7 +23,7 @@
           <input type="text" id="type" />
         </div>
         <div>
-          <h3>Street Name:</h3>
+          <h3>Nom de Rue:</h3>
           <input type="text" id="street-name" />
         </div>
         <div>
@@ -87,7 +87,8 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestObject),
     });
-    const getResult = await response.json();
+    console.log(response);
+    const getResult = await response;
     console.log(getResult);
     let coordinnatesDisplay = getResult.features[0].geometry.coordinates;
     let managedData = `LATITUDE: ${coordinnatesDisplay[1]}\nLONGITUDE: ${coordinnatesDisplay[0]}`;

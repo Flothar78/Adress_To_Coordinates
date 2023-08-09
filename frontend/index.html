@@ -70,26 +70,25 @@
   let streetType = document.getElementById("type");
   let streetName = document.getElementById("street-name");
   let postalCode = document.getElementById("postal-code");
-
   let button = document.getElementById("button");
-
+  let coord = document.getElementsByClassName("coord");
   button.addEventListener("click", async () => {
-    // await console.log(
-    //   streetNumber.value,
-    //   streetType.value,
-    //   streetName.value,
-    //   postalCode.value
-    // ),
     await fetchAdressAPI();
   });
-
-  let coord = document.getElementsByClassName("coord");
-
   const fetchAdressAPI = async () => {
-    const response = await fetch(
-      `https://api-adresse.data.gouv.fr/search/?q=${streetNumber}+${streetType}+${streetName}&postcode=${postalCode}`
-    );
+    const requestObject = {
+      streetNumber: streetNumber.value,
+      streetType: streetType.value,
+      streetName: streetName.value,
+      postalCode: postalCode.value,
+    };
+    const response = await fetch(`/api`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestObject),
+    });
     const getResult = await response.json();
+    console.log(getResult);
     let coordinnatesDisplay = getResult.features[0].geometry.coordinates;
     let managedData = `LATITUDE: ${coordinnatesDisplay[1]}\nLONGITUDE: ${coordinnatesDisplay[0]}`;
     document.getElementById("coordinates").textContent = managedData;

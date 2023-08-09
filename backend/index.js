@@ -9,15 +9,16 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api", async (req, res) => {
-  await console.log(req.body);
+  console.log(req.body);
   const request = req.body;
-  const streetNumber = request.streetNumber;
-  const streetType = request.streetType;
-  const streetName = request.streetName;
-  const postalCode = request.postalCode;
-  await axios.post(
-    `https://api-adresse.data.gouv.fr/search/?q=${streetNumber}+${streetType}+${streetName}&postcode=${postalCode}`
-  );
+  try {
+    const response = await axios.get(
+      `https:api-adresse.data.gouv.fr/search/?q=${request.streetNumber}+${request.streetType}+${request.streetName}&postcode=${request.postalCode}`
+    );
+    await console.log((response.data.features[0].geometry.coordinates));
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // https://api-adresse.data.gouv.fr/search/?q=${streetNumber}+${streetType}+${streetName}&postcode=${postalCode}`

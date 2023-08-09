@@ -87,10 +87,7 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestObject),
     });
-    console.log(response);
     const getResult = await response.json();
-    console.log(getResult);
-
     let managedData = `LATITUDE: ${getResult[1]}\nLONGITUDE: ${getResult[0]}`;
     document.getElementById("coordinates").textContent = managedData;
   };

@@ -5,11 +5,9 @@ const app = express();
 app.listen(3001, () => console.log(`App is running on port  3001`));
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:3001/" }));
-
 app.get("/", (req, res) => {
   res.sendFile("index.html", { root: "../frontend" });
 });
-
 app.post("/api", async (req, res) => {
   console.log(req.body);
   const request = req.body;
@@ -23,5 +21,3 @@ app.post("/api", async (req, res) => {
     console.error(error);
   }
 });
-
-// https://api-adresse.data.gouv.fr/search/?q=${streetNumber}+${streetType}+${streetName}&postcode=${postalCode}`

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <div
+        style="
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        "
+      >
+        <div>
+          <h3>N° de rue:</h3>
+          <input type="text" id="street-number" />
+        </div>
+        <div>
+          <h3>Type de voie (rue, etc.):</h3>
+          <input type="text" id="type" />
+        </div>
+        <div>
+          <h3>Street Name:</h3>
+          <input type="text" id="street-name" />
+        </div>
+        <div>
+          <h3>Code Postal:</h3>
+          <input type="text" id="postal-code" />
+        </div>
+      </div>
+      <div>
+        <button
+          id="button"
+          style="
+            width: 90px;
+            height: 50px;
+            margin: auto;
+            margin: 90px 0 0 46.8%;
+          "
+        >
+          Chercher
+        </button>
+      </div>
+      <div
+        id="coordinates"
+        style="
+          width: 500px;
+          height: 50px;
+          border: black solid 2px;
+          margin: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 8%;
+        "
+      >
+        C'est ici que vous lirez les cooordonnées
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  //  French Adress API  https://adresse.data.gouv.fr/api-doc/adresse   //
+
+  let streetNumber = document.getElementById("street-number");
+  let streetType = document.getElementById("type");
+  let streetName = document.getElementById("street-name");
+  let postalCode = document.getElementById("postal-code");
+
+  let button = document.getElementById("button");
+
+  button.addEventListener("click", async () => {
+    // await console.log(
+    //   streetNumber.value,
+    //   streetType.value,
+    //   streetName.value,
+    //   postalCode.value
+    // ),
+    await fetchAdressAPI();
+  });
+
+  let coord = document.getElementsByClassName("coord");
+
+  const fetchAdressAPI = async () => {
+    const response = await fetch(
+      `https://api-adresse.data.gouv.fr/search/?q=${streetNumber}+${streetType}+${streetName}&postcode=${postalCode}`
+    );
+    const getResult = await response.json();
+    let coordinnatesDisplay = getResult.features[0].geometry.coordinates;
+    let managedData = `LATITUDE: ${coordinnatesDisplay[1]}\nLONGITUDE: ${coordinnatesDisplay[0]}`;
+    document.getElementById("coordinates").textContent = managedData;
+  };
+</script>
